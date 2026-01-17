@@ -1,5 +1,7 @@
 # Competitive Analysis Tool
 
+[![Tests](https://github.com/VibeCoder707/Competitive_Analysis/actions/workflows/tests.yml/badge.svg)](https://github.com/VibeCoder707/Competitive_Analysis/actions/workflows/tests.yml)
+
 CLI tool for comprehensive competitor analysis including web scraping, SEO analysis, news monitoring, and social media tracking.
 
 ## Installation
