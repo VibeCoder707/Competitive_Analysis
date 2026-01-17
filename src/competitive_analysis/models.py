@@ -13,6 +13,9 @@ class Competitor(BaseModel):
     url: HttpUrl | None = None
     twitter: str | None = None
     linkedin: str | None = None
+    facebook: str | None = None
+    instagram: str | None = None
+    tiktok: str | None = None
     created_at: datetime = Field(default_factory=datetime.now)
 
 

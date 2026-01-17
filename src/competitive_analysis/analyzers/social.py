@@ -19,6 +19,18 @@ class SocialAnalyzer(BaseAnalyzer):
         """Analyze social media profiles of a competitor."""
         profiles = []
 
+        # Analyze Facebook if provided
+        if competitor.facebook:
+            profiles.append(self._create_profile("facebook", competitor.facebook))
+
+        # Analyze Instagram if provided
+        if competitor.instagram:
+            profiles.append(self._create_profile("instagram", competitor.instagram))
+
+        # Analyze TikTok if provided
+        if competitor.tiktok:
+            profiles.append(self._create_profile("tiktok", competitor.tiktok))
+
         # Analyze Twitter/X profile if handle provided
         if competitor.twitter:
             twitter_profile = await self._analyze_twitter(competitor.twitter)
@@ -32,6 +44,14 @@ class SocialAnalyzer(BaseAnalyzer):
                 profiles.append(linkedin_profile)
 
         return SocialAnalysisResult(profiles=profiles)
+
+    def _create_profile(self, platform: str, handle: str) -> SocialProfile:
+        """Create a basic social profile."""
+        handle = handle.lstrip("@")
+        return SocialProfile(
+            platform=platform,
+            handle=f"@{handle}",
+        )
 
     async def _analyze_twitter(self, handle: str) -> SocialProfile | None:
         """Analyze a Twitter/X profile (public data only)."""

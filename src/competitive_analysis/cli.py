@@ -26,13 +26,27 @@ def main() -> None:
 @click.option("--url", "-u", help="Competitor website URL")
 @click.option("--twitter", "-t", help="Twitter/X handle")
 @click.option("--linkedin", "-l", help="LinkedIn profile URL")
-def add(name: str, url: str | None, twitter: str | None, linkedin: str | None) -> None:
+@click.option("--facebook", "-f", help="Facebook page/handle")
+@click.option("--instagram", "-i", help="Instagram handle")
+@click.option("--tiktok", "-k", help="TikTok handle")
+def add(
+    name: str,
+    url: str | None,
+    twitter: str | None,
+    linkedin: str | None,
+    facebook: str | None,
+    instagram: str | None,
+    tiktok: str | None,
+) -> None:
     """Add a competitor to track."""
     competitor = Competitor(
         name=name,
         url=url,
         twitter=twitter,
         linkedin=linkedin,
+        facebook=facebook,
+        instagram=instagram,
+        tiktok=tiktok,
     )
     add_competitor(competitor)
     console.print(f"[green]Added competitor:[/green] {name}")
@@ -43,6 +57,12 @@ def add(name: str, url: str | None, twitter: str | None, linkedin: str | None) -
         console.print(f"  Twitter: {twitter}")
     if linkedin:
         console.print(f"  LinkedIn: {linkedin}")
+    if facebook:
+        console.print(f"  Facebook: {facebook}")
+    if instagram:
+        console.print(f"  Instagram: {instagram}")
+    if tiktok:
+        console.print(f"  TikTok: {tiktok}")
 
 
 @main.command("list")
@@ -58,15 +78,25 @@ def list_cmd() -> None:
     table = Table(title="Tracked Competitors")
     table.add_column("Name", style="cyan")
     table.add_column("URL")
-    table.add_column("Twitter")
-    table.add_column("LinkedIn")
+    table.add_column("Social", style="dim")
 
     for c in competitors:
+        socials = []
+        if c.facebook:
+            socials.append(f"FB:{c.facebook}")
+        if c.instagram:
+            socials.append(f"IG:{c.instagram}")
+        if c.tiktok:
+            socials.append(f"TT:{c.tiktok}")
+        if c.twitter:
+            socials.append(f"X:{c.twitter}")
+        if c.linkedin:
+            socials.append("LI")
+
         table.add_row(
             c.name,
             str(c.url) if c.url else "-",
-            c.twitter or "-",
-            c.linkedin or "-",
+            ", ".join(socials) if socials else "-",
         )
 
     console.print(table)
